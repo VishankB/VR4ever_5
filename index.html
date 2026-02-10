@@ -8,6 +8,7 @@
   body {
     margin: 0;
     height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,11 +16,35 @@
     background: linear-gradient(135deg, #eef2ff, #fdf2f8);
   }
 
+  /* Floating hearts & sparkles */
+  .float {
+    position: absolute;
+    bottom: -20px;
+    animation: rise linear infinite;
+    opacity: 0.7;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes rise {
+    from {
+      transform: translateY(0) scale(0.7);
+      opacity: 0;
+    }
+    20% { opacity: 0.7; }
+    to {
+      transform: translateY(-120vh) scale(1.2);
+      opacity: 0;
+    }
+  }
+
+  /* Card */
   .card {
     width: 380px;
     height: 560px;
     perspective: 1400px;
     cursor: pointer;
+    z-index: 2;
   }
 
   .inner {
@@ -45,9 +70,9 @@
     justify-content: center;
     text-align: center;
     box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+    background: #fff;
   }
 
-  /* FRONT */
   .front {
     background: linear-gradient(145deg, #ffffff, #f8fafc);
     border: 1px solid rgba(180,180,255,0.4);
@@ -71,7 +96,6 @@
     color: #666;
   }
 
-  /* BACK */
   .back {
     transform: rotateY(180deg);
     background: linear-gradient(145deg, #fdf2f8, #eef2ff);
@@ -103,6 +127,21 @@
 </style>
 </head>
 <body>
+
+<!-- Floating background elements -->
+<script>
+  const icons = ["✨", "❤️"];
+  for (let i = 0; i < 24; i++) {
+    const f = document.createElement("div");
+    f.className = "float";
+    f.innerText = icons[Math.floor(Math.random() * icons.length)];
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.fontSize = (12 + Math.random() * 20) + "px";
+    f.style.animationDuration = (8 + Math.random() * 6) + "s";
+    f.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(f);
+  }
+</script>
 
 <div class="card" id="card" onclick="flipCard()">
   <div class="inner">
